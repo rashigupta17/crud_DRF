@@ -5,17 +5,13 @@ from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 
 
-class boardingpass(models.Model):
-    flightdate = models.DateTimeField()
-    id = models.IntegerField(primary_key =True)
-    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    
+
     
 
 class passengers(models.Model):
     name = models.CharField(max_length = 200)
     contact = models.IntegerField()
-    boardingid = models.ForeignKey(boardingpass, on_delete=models.CASCADE)
+    boardingid = models.IntegerField()
     #added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     owner = models.ForeignKey('auth.User', related_name='passengers', on_delete=models.CASCADE)
     highlighted = models.TextField()

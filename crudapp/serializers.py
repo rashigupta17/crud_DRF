@@ -1,32 +1,20 @@
 from rest_framework import serializers
-from .models import boardingpass,passengers
+from .models import passengers
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    passenger = serializers.PrimaryKeyRelatedField(many=True, queryset=passengers.objects.all())
+    snippets = serializers.HyperlinkedRelatedField(many=True, view_name='passenger-detail', read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'passenger']
+        fields = ["url",'id', 'username', 'passenger']
 
 
 class PassengersSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    #highlight = serializers.HyperlinkedIdentityField(view_name='passenger-highlight', format='html')
     class Meta:
         model = passengers
-        fields = ["name","contact","boardingid", "owner"]
+        fields = ["url","id","name","contact","boardingid", "owner"]
 
-
-class BoardingPassSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = boardingpass
-        fields = ["flightdate","id","added_by"]
-
-
-
-class PassengersSerializer(serializers.HyperlinkedModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
-    class Meta:
-        model = passengers
-        fields = ["name","contact","boardingid", "owner"]
 
