@@ -1,8 +1,15 @@
 from django.urls import path,include
 from . import views
 from rest_framework.urlpatterns import format_suffix_patterns
-from django.conf.urls import include
+from django.conf.urls import include,url
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 app_name = "crudapp"
+
 urlpatterns= format_suffix_patterns([path('', views.api_root),
     #path('passenger/<int:pk>/highlight/', views.passengershighlight.as_view()),
     path('passenger/', views.passengers_list.as_view(),name= 'passenger-list'),
@@ -10,4 +17,6 @@ urlpatterns= format_suffix_patterns([path('', views.api_root),
     path('passenger/<int:pk>/highlight/',views.passengershighlight.as_view(),name="passenger-highlight"),
     path('users/', views.UserList.as_view(),name= 'user-list' ),
     path('users/<int:pk>/', views.UserDetail.as_view(),name= 'user-detail'),
-])
+    path('userlogin', views.UserLogin.as_view(), name='userlogin'),
+    path('register', views.RegisterUser.as_view(), name='register'),
+    ])
