@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+import crudapp.views as crudappviews
+from django.conf.urls import url
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("crudapp.urls"))
-
+    path('', include('crudapp.urls')),
+    url(r'^api/admin/', admin.site.urls),
+    
 ]
